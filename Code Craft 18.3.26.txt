@@ -1,0 +1,210 @@
+1.Reverse Word
+Solution :
+// You are using Java
+import java.util.*;
+class Main{
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        s.nextLine();
+        String str=s.nextLine();
+StringBuilder sb=new StringBuilder();
+for(int i=str.length()-1;i>=0;i--){
+            sb.append(str.charAt(i));
+ 
+         }
+            System.out.print(sb.toString());
+    }
+}
+
+
+2.rotated sorted array 
+
+Solution :
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        
+        int n = s.nextInt();
+        int arr[] = new int[n];
+        
+        for(int i = 0; i < n; i++){
+            arr[i] = s.nextInt();
+        }
+        
+        int t = s.nextInt();
+        
+        int res = search(arr, t);
+        
+        if(res != -1){
+            System.out.print(res);
+        } else {
+            System.out.print(-1);
+        }
+    }
+    
+    public static int search(int arr[], int t){
+        int left = 0;
+        int right = arr.length - 1;
+        
+        while(left <= right){
+            int mid = left + (right - left) / 2;
+            
+            if(arr[mid] == t){
+                return mid;
+            }
+            
+            // Left half is sorted
+            if(arr[left] <= arr[mid]){
+                if(t >= arr[left] && t < arr[mid]){
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            }
+            // Right half is sorted
+            else {
+                if(t > arr[mid] && t <= arr[right]){
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+        
+        return -1;
+    }
+}
+
+
+3.Merge The 2 array
+
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+
+        int n = s.nextInt();
+        int arr1[] = new int[n];
+        for(int i = 0; i < n; i++){
+            arr1[i] = s.nextInt();
+        }
+
+        int m = s.nextInt();
+        int arr2[] = new int[m];
+        for(int i = 0; i < m; i++){
+            arr2[i] = s.nextInt();
+        }
+
+        int res[] = new int[n + m];
+
+        // copy arr1
+        for(int i = 0; i < n; i++){
+            res[i] = arr1[i];
+        }
+
+        // copy arr2
+        for(int i = 0; i < m; i++){
+            res[n + i] = arr2[i];
+        }
+
+        // sort
+ Arrays.sort(res);
+        // print
+        for(int i = 0; i < n + m; i++){
+            System.out.print(res[i] + " ");
+        }
+
+        System.out.println();
+        System.out.print("Count: " + (n + m));
+    }
+}
+
+4.Fibonacci Value :
+
+Solution :
+// You are using Java
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+
+        int n = s.nextInt();
+
+      
+
+        int a = 0, b = 1;
+        int c=0;
+
+        for(int i = 2; i <= n; i++){
+             c = a + b;
+            a = b;
+            b = c;
+        }
+
+        System.out.print(c);
+    }
+}
+
+5.Valid Anagram 
+
+Solution :
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+
+        String str1 = s.nextLine().replaceAll("\\s+", "").toLowerCase();
+        String str2 = s.nextLine().replaceAll("\\s+", "").toLowerCase();
+
+        boolean res = valid(str1, str2);
+
+        if(res){
+            System.out.println("Valid Anagram");
+        } else {
+            System.out.println("Invalid Anagram");
+        }
+
+        System.out.print("S: ");
+        printCharCount(str1);
+
+        System.out.print("T: ");
+        printCharCount(str2);
+    }
+
+    // Check if two strings are anagrams
+    public static boolean valid(String s, String t){
+        if(s.length() != t.length()) return false;
+
+        char[] c = s.toCharArray();
+        char[] d = t.toCharArray();
+
+        Arrays.sort(c);
+        Arrays.sort(d);
+
+        return Arrays.equals(c, d);
+    }
+
+    // Print character counts using frequency array
+    public static void printCharCount(String str){
+        int freq[] = new int[256]; // ASCII characters
+
+        for(char c : str.toCharArray()){
+            freq[c]++;
+        }
+        
+
+        for(int i='a';i<='z';i++){
+            if(freq[i] != 0){
+                System.out.print((char)i + ":" + freq[i] + " ");
+                freq[i] = 0; // Avoid printing same char again
+            }
+        }
+        System.out.println();
+    }
+}
