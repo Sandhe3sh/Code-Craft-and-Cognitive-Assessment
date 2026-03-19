@@ -1,0 +1,201 @@
+1.insertion index as Position
+
+Solution :
+// You are using Java
+import java.util.*;
+class Main{
+    
+    public static int Position(int arr[],int t){
+        int left=0;
+        int right=arr.length-1;
+        while(left<=right){
+            int mid=left+(right-left)/2;
+            if(arr[mid]==t){
+                return mid;
+            }
+            else if(arr[mid]<t){
+                left=mid+1;
+            }
+            else{
+                right=mid-1;
+            }
+        }
+        return left;
+        
+        
+    }
+    
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=s.nextInt();
+        }
+        int t=s.nextInt();
+        
+        
+        int res=Position(arr,t);
+        System.out.print("Position: "+res);
+        if(res<n&&arr[res]==t){
+            System.out.print("Status: Present");
+        }
+        else{
+            System.out.print("Status: Insert");
+        }
+    }
+}
+
+
+2.reversing every group of size k
+
+Solution :
+ import java.util.*;
+ class Main{
+     public static void main(String[] args){
+         Scanner s=new Scanner(System.in);
+         int n =s.nextInt();
+         int arr[]=new int[n];for(int i=0;i<n;i++){
+             arr[i]=s.nextInt();
+         }
+         
+         int k=s.nextInt();
+         for(int i=0;i<n;i=i+k){
+             if(i+k<=n){
+                 int left=i;
+                 int right=i+k-1;
+                 while(left<right){
+                     int temp=arr[left];
+                     arr[left]=arr[right];
+                     arr[right]=temp;
+                 left++;
+                 right--;
+                 }
+             }
+             
+         }
+         
+         for(int i=0;i<n;i++){
+             System.out.print(arr[i]+" ");
+         }
+         System.out.print("Count: "+n);
+     }
+ }
+
+3.Two SUm :
+// You are using Java-17version 
+import java.util.*;
+class Main{
+    
+    public static int[] TwoSum(int arr[],int t){
+        int n=arr.length;
+        HashMap<Integer,Integer>map=new HashMap<>();
+        for(int i=0;i<n;i++){
+            int comp=t-arr[i];
+            if(map.containsKey(comp)){
+                return new int[]{map.get(comp),i};
+            }
+            map.put(arr[i],i);
+        }
+        return null;
+    }
+    
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=s.nextInt();
+        }
+        int t=s.nextInt();
+        int res[]=TwoSum(arr,t);
+        if(res!=null){
+            System.out.print(res[0]+" "+res[1]);
+        }
+        else{
+        System.out.print(-1);
+        }
+    }
+}
+
+4.Next Greater Element
+
+// You are using Java-17version 
+import java.util.*;
+class Main{
+    
+    public static int[] NGE(int nums1[],int nums2[]){
+        Stack<Integer>st=new Stack<>();
+        int n=nums2.length;
+        int next[]=new int[n];
+        
+        for(int i=n-1;i>=0;i--){
+            int element=nums2[i];
+            if(st.isEmpty()){
+                st.push(element);
+                next[i]=-1;
+                continue;
+            }
+            while(!st.isEmpty()&&element>=st.peek()){
+                st.pop();
+            }
+            if(st.isEmpty()){
+                next[i]=-1;
+                
+            }
+            else{
+                next[i]=st.peek();
+            }
+            st.push(element);
+        }
+        
+        HashMap<Integer,Integer>map=new HashMap<>();
+        for(int i=0;i<nums2.length;i++){
+            map.put(nums2[i],next[i]);
+        }
+        int res[]=new int[nums1.length];
+        for(int i=0;i<nums1.length;i++){
+            res[i]=map.getOrDefault(nums1[i],-1);
+        }
+        return res;
+    }
+    
+    
+    
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        int arr2[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr2[i]=s.nextInt();
+        }
+        int m=s.nextInt();
+        int arr1[]=new int[m];
+        for(int i=0;i<m;i++){
+            arr1[i]=s.nextInt();
+        }
+        int res[]=NGE(arr1,arr2);
+        for(int x:res){
+        System.out.print(x+" ");
+        }
+    }
+}
+
+5.Sorted Array:
+// You are using Java-17version 
+import java.util.*;
+class Main{
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=s.nextInt();
+            
+        }
+        Arrays.sort(arr);
+        for(int i=0;i<n;i++){
+            System.out.print(arr[i]+" ");
+        }
+    }
+}
