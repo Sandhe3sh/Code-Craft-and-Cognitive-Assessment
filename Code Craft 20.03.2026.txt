@@ -1,0 +1,146 @@
+1.Largest Rectangle HistoGram
+
+// You are using Java
+import java.util.*;
+class Main{
+    
+    public static int LRH(int h[]){
+        int maxArea=0;
+        Stack<Integer>st=new Stack<>();
+        for(int i=0;i<h.length;i++){
+            
+            
+            while(!st.isEmpty()&&h[st.peek()]>h[i]){
+                int height=h[st.pop()];
+                int width;
+                if(st.isEmpty()){
+                    width=i;
+                }
+                else{
+                    width=i-st.peek()-1;
+                }
+                maxArea=Math.max(maxArea,height*width);
+            }
+            st.push(i);
+        }
+        int n=h.length;
+          while(!st.isEmpty()){
+                int height=h[st.pop()];
+                int width;
+                if(st.isEmpty()){
+                    width=n;
+                }
+                else{
+                    width=n-st.peek()-1;
+                }
+                maxArea=Math.max(maxArea,height*width);
+            }
+            return maxArea;
+    }
+    
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=s.nextInt();
+            
+        }
+        System.out.print("Max Area: "+LRH(arr));
+    }
+}
+
+2.maximum depth 
+import java.util.*;
+
+class TreeNode{
+    int val;
+    TreeNode left,right;
+    
+    TreeNode(int x){
+        val=x;
+    }
+}
+
+class Main{
+    public static TreeNode buildTree(String[] arr){
+        if(arr.length==0||arr[0].equals("null"))return null;
+        
+        TreeNode root=new TreeNode(Integer.parseInt(arr[0]));
+        Queue<TreeNode> q=new LinkedList<>();
+        q.add(root);
+        
+        
+        int i=1;
+        while(!q.isEmpty()&&i<arr.length){
+            TreeNode current=q.poll();
+            if(i<arr.length&&!arr[i].equals("null")){
+                current.left=new TreeNode(Integer.parseInt(arr[i]));
+                q.add(current.left);
+            }
+            i++;
+            
+              if(i<arr.length&&!arr[i].equals("null")){
+                current.right=new TreeNode(Integer.parseInt(arr[i]));
+                q.add(current.right);
+            }
+            i++;
+        }
+        return root;
+    }
+    
+    public static int MD(TreeNode root){
+        if(root==null)return 0;
+        int left=MD(root.left);
+        int right=MD(root.right);
+        return 1+Math.max(left,right);
+    }
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        s.nextLine();
+        String arr[]=s.nextLine().split(" ");
+        TreeNode root=buildTree(arr);
+        System.out.print("Depth: "+MD(root));
+        
+        
+    }
+}
+
+3.Valid Parenthees :
+// You are using Java
+import java.util.*;
+
+
+
+class Main{
+public static boolean VP(String arr)    {
+    Stack<Character>st=new Stack<>();
+    for(char c:arr.toCharArray()){
+        if(c=='('||c=='{'||c=='['){
+            st.push(c);
+        }
+        else {
+            if(st.isEmpty())return false;
+            char top=st.pop();
+            if((c==')'&&top!='(')||
+            (c=='}'&&top!='{')||
+        (c==']'&&top!='[')
+            )return false;
+        }
+    }
+        return st.isEmpty();
+}
+
+public static void main(String[] args){
+    Scanner s=new Scanner(System.in);
+    String arr=s.nextLine();
+boolean res=VP(arr);
+if(res){
+    System.out.print("Valid");
+}
+else{
+    System.out.print("Invalid");
+}
+}
+}
