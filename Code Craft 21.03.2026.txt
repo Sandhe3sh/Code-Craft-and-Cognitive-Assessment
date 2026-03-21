@@ -1,0 +1,206 @@
+1.Insert :
+
+ public static TreeNode insert(TreeNode root, int val) {
+        if (root == null) return new TreeNode(val);
+
+        if (val < root.val)
+            root.left = insert(root.left, val);
+        else
+            root.right = insert(root.right, val);
+
+        return root;
+    }
+
+2.levelOrder
+
+   public static void levelOrder(TreeNode root) {
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+
+        while (!q.isEmpty()) {
+            TreeNode curr = q.poll();
+            System.out.print(curr.val);
+
+            if (!q.isEmpty() || curr.left != null || curr.right != null)
+                System.out.print(" ");
+
+            if (curr.left != null) q.add(curr.left);
+            if (curr.right != null) q.add(curr.right);
+        }
+    }
+
+3.Search BST :
+
+  static TreeNode searchBST(TreeNode root, int val) {
+        if (root == null || root.val == val) return root;
+
+        if (val < root.val)
+            return searchBST(root.left, val);
+        else
+            return searchBST(root.right, val);
+    }
+
+4.Find Target Index :
+
+// You are using Java
+import java.util.*;
+class Main{
+    
+    public static int BS(int nums[],int t){
+        int l=0;
+        int r=nums.length-1;
+        while(l<=r){
+            int mid=l+(r-l)/2;
+            if(nums[mid]==t){
+                return mid;
+            }
+            if(nums[mid]<t){
+                l=mid+1;
+            }
+            else{
+                r=mid;
+            }
+            
+        }
+        return -1;
+    }
+    
+    
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=s.nextInt();
+        }
+        int t=s.nextInt();
+        System.out.print(BS(arr,t));
+    }
+}
+
+5. Islands :
+
+// You are using Java
+import java.util.*;
+
+class Main {
+
+    static int m, n;
+
+    public static void dfs(int[][] grid, int i, int j) {
+        // Boundary + water check
+        if (i < 0 || j < 0 || i >= m || j >= n || grid[i][j] == 0)
+            return;
+
+        // Mark visited
+        grid[i][j] = 0;
+
+        // 4 directions
+        dfs(grid, i + 1, j);
+        dfs(grid, i - 1, j);
+        dfs(grid, i, j + 1);
+        dfs(grid, i, j - 1);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        m = sc.nextInt();
+        n = sc.nextInt();
+
+        int[][] grid = new int[m][n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = sc.nextInt();
+            }
+        }
+
+        int count = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    count++;
+                    dfs(grid, i, j);
+                }
+            }
+        }
+
+        System.out.print(count);
+    }
+}
+
+6.Valid BST :
+ import java.util.*;
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+
+    TreeNode(int x) {
+        val = x;
+        left = right = null;
+    }
+}
+
+class Main {
+
+    // Build tree from level order (-1 = null)
+    public static TreeNode buildTree(int[] arr) {
+        if (arr.length == 0 || arr[0] == -1) return null;
+
+        TreeNode root = new TreeNode(arr[0]);
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+
+        int i = 1;
+
+        while (!q.isEmpty() && i < arr.length) {
+            TreeNode curr = q.poll();
+
+            if (i < arr.length && arr[i] != -1) {
+                curr.left = new TreeNode(arr[i]);
+                q.add(curr.left);
+            }
+            i++;
+
+            if (i < arr.length && arr[i] != -1) {
+                curr.right = new TreeNode(arr[i]);
+                q.add(curr.right);
+            }
+            i++;
+        }
+
+        return root;
+    }
+
+    // Validate BST using range
+    public static boolean isValidBST(TreeNode root, long min, long max) {
+        if (root == null) return true;
+
+        if (root.val <= min || root.val >= max) return false;
+
+        return isValidBST(root.left, min, root.val) &&
+               isValidBST(root.right, root.val, max);
+    }
+
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+
+        int n = s.nextInt();
+        int[] arr = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            arr[i] = s.nextInt();
+        }
+
+        TreeNode root = buildTree(arr);
+
+        if (isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE)) {
+            System.out.print("Valid");
+        } else {
+            System.out.print("Invalid");
+        }
+    }
+}
