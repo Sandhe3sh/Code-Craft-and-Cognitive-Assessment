@@ -1,0 +1,45 @@
+// You are using Java
+import java.util.*;
+class Main{
+    
+    public static String encode(List<String>str){
+        StringBuilder sb=new StringBuilder();
+        for(String s:str){
+            sb.append(s.length()).append("#").append(s);
+        }
+        return sb.toString();
+    }
+    
+    public static List<String> decode(String s){
+        List<String>res=new ArrayList();
+        int i=0;
+        while(i<s.length()){
+            int j=i;
+            if(s.charAt(j)!='#'){
+                j++;
+            }
+            int len=Integer.parseInt(s.substring(i,j));
+            res.add(s.substring(j+1,j+1+len));
+            i=j+1+len;
+        }
+        return res;
+    }
+    
+    
+    
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        s.nextLine();
+        List<String>input=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            input.add(s.nextLine());
+        }
+        System.out.println(encode(input));
+        
+        List<String>Res=decode(encode(input));
+        for(String str:Res){
+            System.out.println(str+" ");
+        }
+    }
+}
