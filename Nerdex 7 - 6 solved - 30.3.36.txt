@@ -1,0 +1,320 @@
+Max Path SUm :
+// You are using Java
+import java.util.*;
+
+class TreeNode{
+    int val;
+    TreeNode left,right;
+    
+    TreeNode(int x){
+        val=x;
+    }
+}
+
+
+
+class Main{
+    public static TreeNode buildTree(String[] arr){
+        if(arr.length==0||arr[0].equals("null"))return null;
+        
+        TreeNode root=new TreeNode(Integer.parseInt(arr[0]));
+        Queue<TreeNode>q=new LinkedList<>();
+        q.add(root);
+        int i=1;
+        while(!q.isEmpty()&&i<arr.length){
+            TreeNode curr=q.poll();
+            if(i<arr.length&&!arr[i].equals("null")){
+                curr.left=new TreeNode(Integer.parseInt(arr[i]));
+                q.add(curr.left);
+            }
+            i++;
+            
+            if(i<arr.length&&!arr[i].equals("null")){
+                curr.right=new TreeNode(Integer.parseInt(arr[i]));
+                q.add(curr.right);
+            }
+            i++;
+        }
+        return root;
+    }
+    
+    static int maxsum=Integer.MIN_VALUE;
+    public static int maxpathsum(TreeNode root){
+        maxsumpathhelper(root);
+        return maxsum;
+    }
+    public static int maxsumpathhelper(TreeNode root){
+        if(root==null)return 0;
+        int left=maxsumpathhelper(root.left);
+        int right=maxsumpathhelper(root.right);
+        int alltogether=root.val+left+right;
+        int leftsubtree=Math.max(root.val,root.val+left);
+        int rightsubtree=Math.max(root.val,root.val+right);
+        int onepath=Math.max(leftsubtree,rightsubtree);
+        int maxsumoneside=Math.max(onepath,alltogether);
+        maxsum=Math.max(maxsum,maxsumoneside);
+        return onepath;
+    }
+    
+    
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        s.nextLine();
+        String arr[]=s.nextLine().split(" ");
+    TreeNode root=    buildTree(arr);
+    System.out.print(maxpathsum(root));
+        
+        
+    }
+}
+
+Daily Temp :
+// You are using Java
+import java.util.*;
+class Main{
+    
+    public static int[] dailytemp(int arr[]){
+        Stack<Integer>st=new Stack<>();
+        int res[]=new int[arr.length];
+        
+        for(int i=arr.length-1;i>=0;i--){
+            
+            while(!st.isEmpty()&&arr[i]>=arr[st.peek()]){
+                st.pop();
+            }
+            if(st.isEmpty()){
+                res[i]=0;
+            }
+            else{
+                res[i]=st.peek()-i;
+            }
+            
+            st.push(i);
+        }
+        return res;
+    }
+    
+    
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=s.nextInt();
+        }
+        int res[]=dailytemp(arr);
+        for(int i=0;i<n;i++){
+        System.out.print(res[i]+" ");
+        }
+    }
+}
+
+right side view: 
+// You are using Java
+import java.util.*;
+class TreeNode{
+    int val;
+    TreeNode left,right;
+    
+    TreeNode(int x){
+        val=x;
+    }
+}
+
+
+class Main{
+    public static TreeNode buildTree(String[] arr){
+        if(arr.length==0||arr[0].equals("null")){
+            return null;
+        }
+        
+        TreeNode root=new TreeNode(Integer.parseInt(arr[0]));
+        Queue<TreeNode>q=new LinkedList<>();
+        q.add(root);
+        int i=1;
+        while(!q.isEmpty()&&i<arr.length){
+            TreeNode curr=q.poll();
+            if(i<arr.length&&!arr[i].equals("null")){
+                curr.left=new TreeNode(Integer.parseInt(arr[i]));
+                q.add(curr.left);
+            }
+            i++;
+               if(i<arr.length&&!arr[i].equals("null")){
+                curr.right=new TreeNode(Integer.parseInt(arr[i]));
+                q.add(curr.right);
+            }
+            i++;
+        }
+        return root;
+    }
+    public static  void rightsideview(TreeNode root){
+        if(root==null)return;
+        Queue<TreeNode>q=new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            int size=q.size();
+            for(int i=0;i<size;i++){
+                TreeNode curr=q.poll();
+                if(i==size-1){
+                    System.out.print(curr.val+" ");
+                }
+            if(curr.left!=null)q.add(curr.left);
+            if(curr.right!=null)q.add(curr.right);
+            }
+        }
+    }
+    
+    
+    
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        s.nextLine();
+        String arr[]=s.nextLine().split(" ");
+        TreeNode root=buildTree(arr);
+        rightsideview(root);
+     }
+}
+
+Path sum :
+// You are using Java
+import java.util.*;
+class TreeNode{
+    int val;
+    TreeNode left,right;
+    TreeNode(int x){
+        val=x;
+    }
+}
+
+class Main{
+    
+    public static TreeNode buildTree(String[] arr){
+        if(arr.length==0||arr[0].equals("null"))return null;
+        TreeNode root=new TreeNode(Integer.parseInt(arr[0]));
+        Queue<TreeNode>q=new LinkedList<>();
+        q.add(root);
+        int i=1;
+        while(!q.isEmpty()&&i<arr.length){
+            TreeNode curr=q.poll();
+            if(i<arr.length&&!arr[i].equals("null")){
+                curr.left=new TreeNode(Integer.parseInt(arr[i]));
+                q.add(curr.left);
+            }
+            i++;
+              if(i<arr.length&&!arr[i].equals("null")){
+                curr.right=new TreeNode(Integer.parseInt(arr[i]));
+                q.add(curr.right);
+            }
+            i++;
+        }
+        return root;
+    }
+    public static boolean PathSum(TreeNode root,int ts){
+        if(root==null)return false;
+        if(root.left==null&&root.right==null){
+            return ts==root.val;
+        }
+        
+        int rs=ts-root.val;
+        return PathSum(root.left,rs)||PathSum(root.right,rs);
+    }
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        s.nextLine();
+        String[] arr=s.nextLine().split(" ");
+        TreeNode root=buildTree(arr);
+        
+        int target=s.nextInt();
+        boolean res=PathSum(root,target);
+        if(res){
+            System.out.print("Path Exists");
+        }
+        else{
+            System.out.print("No path Found");
+        }
+    }
+}
+
+Minstack :
+// You are using Java
+import java.util.*;
+class Main{
+    
+    
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        int n=s.nextInt();
+        s.nextLine();
+        Stack<Integer>st=new Stack<>();
+        Stack<Integer>minst=new Stack<>();
+        while(n-->0){
+            String op=s.next();
+            if(op.equals("push")){
+                int x=s.nextInt();
+                st.push(x);
+                if(minst.isEmpty()||x<=minst.peek()){
+                    minst.push(x);
+                }
+            }
+            else if(op.equals("pop")){
+               int popped= st.pop();
+                if(popped==minst.peek()){
+                    minst.pop();
+                }
+            }
+            else if(op.equals("top")){
+                System.out.println( st.peek());
+            }
+            else if(op.equals("getMin")){
+                System.out.println( minst.peek());
+            }
+        }
+    }
+}
+
+word patter :
+// You are using Java
+import java.util.*;
+class Main{
+    
+    public static boolean WordPatter(String pattern,String s){
+        String[] word=s.split(" ");
+        if(pattern.length()!=word.length)return false;
+        
+        HashMap<Character,String>map=new HashMap<>();
+        
+        for(int i=0;i<pattern.length();i++){
+            char ch=pattern.charAt(i);
+            String wordd=word[i];
+            
+            if(map.containsKey(ch)){
+                if(!map.get(ch).equals(wordd)){
+                    return false;
+                }
+            }
+            else{
+                if(map.containsValue(wordd)){
+                    return false;
+                }
+            }
+            map.put(ch,wordd);
+        }
+        return true;
+    }
+    
+    public static void main(String[] args){
+        Scanner s=new Scanner(System.in);
+        String s1=s.nextLine();
+        String s2=s.nextLine();
+        boolean res=WordPatter(s1,s2);
+        if(res){
+            System.out.print("Pattern Matches");
+        }
+        else{
+            System.out.print("Pattern Does Not Match");
+        }
+    }
+}
